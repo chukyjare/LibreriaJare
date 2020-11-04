@@ -1,5 +1,8 @@
 package controlador;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -7,9 +10,10 @@ import java.awt.event.KeyEvent;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 import modelo.Error;
 import modelo.Info;
@@ -21,6 +25,10 @@ import vista.UI;
 
 public class ParaUI extends UI {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Control control = new Control();
 	private String librosAñadidos ="Libros registrados: ";
 	private int unidades;
@@ -56,7 +64,7 @@ public class ParaUI extends UI {
 
 					if (!libreria.existeISBN(txtISBN.getText())) {
 
-						libreria.añadirLibro(new Libro(txtISBN.getText(), txtTitulo.getText(), txtAutor.getText(),
+						libreria.anadirLibro(new Libro(txtISBN.getText(), txtTitulo.getText(), txtAutor.getText(),
 								txtEditorial.getText(), txtPrecio.getText() + "€", getRadioButtonFormato(),
 								getRadioButtonEstado(), String.valueOf(spinner.getValue())));
 						actualizarLibrosRegistrados(libreria);
@@ -160,7 +168,105 @@ public class ParaUI extends UI {
 			}
 
 		});
-		
+		btnConfiguration.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelMenu.setVisible(!panelMenu.isVisible());
+				if (panelMenu.isVisible()) {
+					btnConfiguration.setIcon(new ImageIcon(UI.class.getResource("/img/configure.png")));
+				} else {
+					btnConfiguration.setIcon(new ImageIcon(UI.class.getResource("/img/settings.png")));
+				}
+			}
+		});
+		itemOriginal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pintarBotones(Color.WHITE, Color.BLACK);
+				pintarPaneles(Color.DARK_GRAY, SystemColor.windowBorder);
+				cambiarCabecera(new Font("Candara", Font.BOLD | Font.ITALIC, 25), SystemColor.controlHighlight);
+				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/book.png")));
+			}
+		});
+		itemClasico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pintarBotones(Color.BLACK, UIManager.getColor("Button.light"));
+				pintarPaneles(SystemColor.controlShadow, SystemColor.activeCaption);
+				cambiarCabecera(new Font("Arial Black", Font.BOLD, 25), Color.black);
+				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/oldBook.png")));
+			}
+		});
+		itemSimpsons.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				pintarBotones(Color.WHITE, new Color(255, 102, 153));
+				pintarPaneles(new Color(77, 166, 255), new Color(255, 255, 77));
+				cambiarCabecera(new Font("Ink Free", Font.BOLD, 28), new Color(255, 255, 77));
+				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/simpsonsSchool.png")));
+			}
+		});
+		itemImgEstatica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/book.png")));
+			}
+		});
+		itemVacio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				lblFondo.setIcon(null);
+			}
+		});
+		itemGIF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/giphy (1).gif")));
+			}
+		});
+		itemAmarillo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLibro.setBackground(new Color(255, 255, 102));
+				pintarLetras(Color.black);
+			}
+		});
+		itemButtonLight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLibro.setBackground(UIManager.getColor("Button.light"));
+				pintarLetras(Color.black);
+			}
+		});
+		itemAzul.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLibro.setBackground(new Color(102, 163, 255));
+				pintarLetras(Color.white);
+			}
+		});
+		itemRojo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLibro.setBackground(new Color(255, 77, 77));
+				pintarLetras(Color.white);
+			}
+		});
+		itemOscuro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelLibro.setBackground(new Color(51, 51, 51));
+				pintarLetras(Color.white);
+
+			}
+		});
+		itemPequena.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setBounds(100, 100, 1280, 750);
+				cambiarFuente(16);
+			}
+		});
+		itemMediana.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setBounds(100, 100, 1500, 900);
+				cambiarFuente(20);
+			}
+
+		});
+		itemGrande.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setBounds(0, 0, 2000, 1000);
+				cambiarFuente(28);
+			}
+		});
 	}
 
 	private void borrarLibroSeleccionado(Libreria libreria) {
@@ -240,4 +346,5 @@ public class ParaUI extends UI {
 
 		return null;
 	}
+	
 }

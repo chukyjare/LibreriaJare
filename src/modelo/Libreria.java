@@ -17,7 +17,7 @@ public class Libreria {
 		this.mapaLibro = new HashMap<String, Libro>();
 	}
 
-	public void añadirLibro(Libro libro) {
+	public void anadirLibro(Libro libro) {
 		
 		this.mapaLibro.put(libro.getISBN(), libro);
 		actualizarContador();

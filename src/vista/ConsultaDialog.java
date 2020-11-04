@@ -4,7 +4,6 @@ package vista;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,18 +14,19 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
-
 import modelo.Error;
 import modelo.Libro;
 import utiles.Validaciones;
-
-import javax.swing.UIManager;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 
 public class ConsultaDialog extends JDialog {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtTitulo;
 	private JTextField txtAutor;
