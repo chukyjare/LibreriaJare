@@ -42,7 +42,6 @@ public class ConsultaDialog extends JDialog {
 	public ConsultaDialog(JFrame padre, boolean modo, Libro libro) {
 		super(padre, modo);
 		setTitle("Editar");
-//		initComponent();
 
 		setBounds(600, 300, 348, 378);
 		contentPane = new JPanel();

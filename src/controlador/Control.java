@@ -35,7 +35,6 @@ public class Control {
 		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO", "CANTIDAD" };
 		String[][] filasTabla = new String[libreria.getHashMapLibro().size()][NUM_FILAS];
 		for (int i = 0; i < libreria.getHashMapLibro().size(); i++) {
-//			Libro libro = libreria.getLibro(i);
 			filasTabla[i][0] = libreria.getLibro(i).getISBN();
 			filasTabla[i][1] = libreria.getLibro(i).getTitulo();
 			filasTabla[i][2] = libreria.getLibro(i).getEditorial();

@@ -22,12 +22,12 @@ import modelo.Error;
 import modelo.Info;
 import modelo.Libreria;
 import modelo.Libro;
+
 import vista.ConsultaDialog;
 import vista.UI;
 import vista.Validacion;
 
 public class ParaUI extends UI {
-
 
 	/**
 	 * 
@@ -130,8 +130,6 @@ public class ParaUI extends UI {
 				Libreria libreria = control.getLibreria();
 				String ISBNsel = JOptionPane.showInputDialog(Info.INFO_INTRODUCE.getMensaje());
 				try {
-//					lblUltimoAñadido.setVisible(true);
-//					mostrarCampos(libreria.getLibro(tablaLibros.getRowCount()-1));
 					JOptionPane.showMessageDialog(null, libreria.obtenerLibro(ISBNsel).toString());
 					borrarCampos();
 					lblUltimoAñadido.setVisible(false);
@@ -393,6 +391,4 @@ public class ParaUI extends UI {
 		return null;
 	}
 
-
-	
 }

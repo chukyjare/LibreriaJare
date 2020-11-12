@@ -775,14 +775,6 @@ public class UI extends JFrame {
 			listaBotones.get(i).setBackground(background);
 			listaBotones.get(i).setForeground(foreground);
 		}
-//		btnGuardar.setForeground(foreground);
-//		btnGuardar.setBackground(background);
-//		btnBorrar.setForeground(foreground);
-//		btnBorrar.setBackground(background);
-//		btnConsultar.setForeground(foreground);
-//		btnConsultar.setBackground(background);
-//		btnSalir.setForeground(foreground);
-//		btnSalir.setBackground(background);
 	}
 
 	protected void pintarPaneles(Color primary, Color secondary) {
