@@ -7,32 +7,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.border.LineBorder;
 
 import modelo.Error;
 import modelo.Info;
 import modelo.Libreria;
 import modelo.Libro;
-import utiles.Validaciones;
 import vista.ConsultaDialog;
 import vista.UI;
+import vista.Validacion;
 
 public class ParaUI extends UI {
+
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Control control = new Control();
-	private String librosAñadidos ="Libros registrados: ";
+	private String librosAñadidos = "Libros registrados: ";
 	private int unidades;
-	
+
 	public ParaUI() {
 		Libreria libreria = control.getLibreria();
 		lblError.setVisible(false);
@@ -43,6 +47,7 @@ public class ParaUI extends UI {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				int MAX_CARACTER = 12;
+				txtISBN.setBorder(new LineBorder(SystemColor.controlDkShadow));
 				if (txtISBN.getText().length() == MAX_CARACTER) {
 					lblCorrect.setVisible(true);
 					lblError.setVisible(false);
@@ -50,6 +55,30 @@ public class ParaUI extends UI {
 					lblCorrect.setVisible(false);
 					lblError.setVisible(true);
 				}
+			}
+		});
+		txtAutor.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				txtAutor.setBorder(new LineBorder(SystemColor.controlDkShadow));
+			}
+		});
+		txtEditorial.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				txtEditorial.setBorder(new LineBorder(SystemColor.controlDkShadow));
+			}
+		});
+		txtTitulo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				txtTitulo.setBorder(new LineBorder(SystemColor.controlDkShadow));
+			}
+		});
+		txtPrecio.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				txtPrecio.setBorder(new LineBorder(SystemColor.controlDkShadow));
 			}
 		});
 		btnSalir.addActionListener(new ActionListener() {
@@ -60,7 +89,9 @@ public class ParaUI extends UI {
 
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (validarCampos()) {
+				Validacion validaciones = new Validacion();
+				if (validaciones.validarCampos(listaTxtValidable, listaLblValidable)
+						&& grupoRatioButtonIsEmpty(grupoFormato) && grupoRatioButtonIsEmpty(grupoEstado)) {
 
 					if (!libreria.existeISBN(txtISBN.getText())) {
 
@@ -71,6 +102,8 @@ public class ParaUI extends UI {
 						borrarCampos();
 						control.rellenarTabla(tablaLibros);
 						comprobarLibreriaVacia(libreria);
+
+						ponerBordesPorDefecto(listaTxtValidable);
 
 					} else {
 						JOptionPane.showMessageDialog(null, Error.ERROR_ISBN_EXISTENTE.getMensaje());
@@ -95,7 +128,7 @@ public class ParaUI extends UI {
 		btnConsultar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Libreria libreria = control.getLibreria();
-				String ISBNsel = JOptionPane.showInputDialog(Info.INFO_INTRODUCE.getMensaje());		
+				String ISBNsel = JOptionPane.showInputDialog(Info.INFO_INTRODUCE.getMensaje());
 				try {
 //					lblUltimoAñadido.setVisible(true);
 //					mostrarCampos(libreria.getLibro(tablaLibros.getRowCount()-1));
@@ -113,7 +146,7 @@ public class ParaUI extends UI {
 				try {
 					Libreria libreria = control.getLibreria();
 					JOptionPane.showMessageDialog(null, libreria.getLibro(tablaLibros.getSelectedRow()).toString());
-					
+
 				} catch (Exception ee) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_NOSELECCIONADO.getMensaje());
 				}
@@ -124,7 +157,7 @@ public class ParaUI extends UI {
 				try {
 					crearConsulta();
 					unidades = Integer.parseInt(libreria.getLibro(tablaLibros.getSelectedRow()).getCantidad());
-					if (unidades<=0) {
+					if (unidades <= 0) {
 						borrarLibroSeleccionado(libreria);
 					}
 					control.rellenarTabla(tablaLibros);
@@ -134,16 +167,15 @@ public class ParaUI extends UI {
 
 			}
 
-
 		});
 		btnBorraUnidad.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					Libreria libreria = control.getLibreria();	
+					Libreria libreria = control.getLibreria();
 					unidades = Integer.parseInt(libreria.getLibro(tablaLibros.getSelectedRow()).getCantidad());
 					unidades--;
 					libreria.getLibro(tablaLibros.getSelectedRow()).setCantidad(String.valueOf(unidades));
-					if (unidades==0) {
+					if (unidades == 0) {
 						borrarLibroSeleccionado(libreria);
 					}
 					control.rellenarTabla(tablaLibros);
@@ -180,10 +212,14 @@ public class ParaUI extends UI {
 		});
 		itemOriginal.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				pintarBotones(Color.WHITE, Color.BLACK);
+				pintarBotones(Color.WHITE, new Color(38, 38, 38));
 				pintarPaneles(Color.DARK_GRAY, SystemColor.windowBorder);
 				cambiarCabecera(new Font("Candara", Font.BOLD | Font.ITALIC, 25), SystemColor.controlHighlight);
 				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/book.png")));
+				btnOjoConsulta.setIcon(new ImageIcon(UI.class.getResource("/img/ojoAzul.png")));
+				btnBorraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/restar.png")));
+				btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/añadir.png")));
+				btnEditar.setIcon(new ImageIcon(UI.class.getResource("/img/editarColorido.png")));
 			}
 		});
 		itemClasico.addActionListener(new ActionListener() {
@@ -192,6 +228,10 @@ public class ParaUI extends UI {
 				pintarPaneles(SystemColor.controlShadow, SystemColor.activeCaption);
 				cambiarCabecera(new Font("Arial Black", Font.BOLD, 25), Color.black);
 				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/oldBook.png")));
+				btnOjoConsulta.setIcon(new ImageIcon(UI.class.getResource("/img/ojo.png")));
+				btnBorraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/cubo-de-la-basura.png")));
+				btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/comprar.png")));
+				btnEditar.setIcon(new ImageIcon(UI.class.getResource("/img/editar.png")));
 			}
 		});
 		itemSimpsons.addActionListener(new ActionListener() {
@@ -200,6 +240,10 @@ public class ParaUI extends UI {
 				pintarPaneles(new Color(77, 166, 255), new Color(255, 255, 77));
 				cambiarCabecera(new Font("Ink Free", Font.BOLD, 28), new Color(255, 255, 77));
 				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/simpsonsSchool.png")));
+				btnOjoConsulta.setIcon(new ImageIcon(UI.class.getResource("/img/ojoAzul.png")));
+				btnBorraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/restarSimpsons.png")));
+				btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/añadirSimpsons.png")));
+				btnEditar.setIcon(new ImageIcon(UI.class.getResource("/img/editarSimpsons.png")));
 			}
 		});
 		itemImgEstatica.addActionListener(new ActionListener() {
@@ -274,16 +318,18 @@ public class ParaUI extends UI {
 		actualizarLibrosRegistrados(libreria);
 		JOptionPane.showMessageDialog(null, Info.INFO_BORRADO.getMensaje());
 	}
+
 	private void actualizarLibrosRegistrados(Libreria libreria) {
 		lblCantidadLibros.setText(librosAñadidos + String.valueOf(libreria.actualizarContador()));
 	}
+
 	private JDialog crearConsulta() {
 		Libreria libreria = control.getLibreria();
 		ConsultaDialog consultaDialog = new ConsultaDialog(this, true, libreria.getLibro(tablaLibros.getSelectedRow()));
 		consultaDialog.setVisible(true);
 		return consultaDialog;
 	}
-	
+
 	private boolean comprobarLibreriaVacia(Libreria libreria) {
 		if (libreria.isVacia()) {
 			btnBorrar.setEnabled(false);
@@ -304,10 +350,10 @@ public class ParaUI extends UI {
 		}
 	}
 
-	private boolean validarCampos() {
-		return Validaciones.validaISBN(txtISBN.getText()) && Validaciones.validaLetras(txtAutor.getText())
-				&& Validaciones.validaLetras(txtEditorial.getText()) && Validaciones.validaFloat(txtPrecio.getText())
-				&& grupoRatioButtonIsEmpty(grupoFormato) && grupoRatioButtonIsEmpty(grupoEstado);
+	private void ponerBordesPorDefecto(ArrayList<JTextField> listaTexfields) {
+		for (int i = 0; i < listaTexfields.size(); i++) {
+			listaTexfields.get(i).setBorder(new LineBorder(SystemColor.controlDkShadow));
+		}
 	}
 
 	private boolean grupoRatioButtonIsEmpty(ButtonGroup grupo) {
@@ -346,5 +392,7 @@ public class ParaUI extends UI {
 
 		return null;
 	}
+
+
 	
 }
