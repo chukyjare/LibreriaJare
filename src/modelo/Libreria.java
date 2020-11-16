@@ -44,7 +44,7 @@ public class Libreria {
 
 	
 
-	private void guardarEnAlmacen() {
+	public void guardarEnAlmacen() {
 		almacen.almacenar(this.mapaLibro);
 		
 	}

@@ -12,7 +12,7 @@ public class Validaciones {
 		return Pattern.matches("[a-zA-ZñÑáéíóúÜüÁÉÍÓÚ0-9\\s]+", cadena);
 	}
 	public static boolean validaNumeros(String cadena) {
-		return Pattern.matches("[a-zA-ZñÑáéíóúÜüÁÉÍÓÚ0-9\\s]+", cadena);
+		return Pattern.matches("[0-9\\s]+", cadena);
 	}
 
 	public static boolean validaISBN(String cadena) {

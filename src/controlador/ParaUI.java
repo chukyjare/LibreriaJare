@@ -17,12 +17,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
-
 import modelo.Error;
 import modelo.Info;
 import modelo.Libreria;
 import modelo.Libro;
-
 import vista.ConsultaDialog;
 import vista.UI;
 import vista.Validacion;
@@ -160,6 +158,7 @@ public class ParaUI extends UI {
 						borrarLibroSeleccionado(libreria);
 					}
 					control.rellenarTabla(tablaLibros);
+					libreria.guardarEnAlmacen();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_NOSELECCIONADO.getMensaje());
 				}
@@ -178,6 +177,7 @@ public class ParaUI extends UI {
 						borrarLibroSeleccionado(libreria);
 					}
 					control.rellenarTabla(tablaLibros);
+					libreria.guardarEnAlmacen();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_NOSELECCIONADO.getMensaje());
 				}
@@ -192,6 +192,7 @@ public class ParaUI extends UI {
 					unidades++;
 					libreria.getLibro(tablaLibros.getSelectedRow()).setCantidad(String.valueOf(unidades));
 					control.rellenarTabla(tablaLibros);
+					libreria.guardarEnAlmacen();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_NOSELECCIONADO.getMensaje());
 				}
