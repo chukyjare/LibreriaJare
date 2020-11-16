@@ -65,7 +65,7 @@ public class UI extends JFrame {
 	protected JRadioButton rbtnEspiral;
 	protected ButtonGroup grupoFormato;
 	protected ButtonGroup grupoEstado;
-	protected JLabel lblUltimoAñadido;
+	protected JLabel lblUltimoAdd;
 	protected JSpinner spinner;
 	protected JLabel lblCorrect;
 	protected JLabel lblError;
@@ -231,12 +231,12 @@ public class UI extends JFrame {
 				UIManager.getColor("Button.focus"), UIManager.getColor("Button.darkShadow"),
 				UIManager.getColor("Button.focus")));
 
-		lblUltimoAñadido = new JLabel("Ultimo Libro que registr\u00F3");
-		lblUltimoAñadido.setEnabled(false);
-		lblUltimoAñadido.setForeground(Color.BLACK);
-		lblUltimoAñadido.setBackground(Color.WHITE);
-		lblUltimoAñadido.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		lblUltimoAñadido.setVisible(false);
+		lblUltimoAdd = new JLabel("Ultimo Libro que registr\u00F3");
+		lblUltimoAdd.setEnabled(false);
+		lblUltimoAdd.setForeground(Color.BLACK);
+		lblUltimoAdd.setBackground(Color.WHITE);
+		lblUltimoAdd.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		lblUltimoAdd.setVisible(false);
 
 		lblCantidad = new JLabel("Cantidad");
 		lblCantidad.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -295,7 +295,7 @@ public class UI extends JFrame {
 																.addComponent(lblPrecio).addGap(18)
 																.addGroup(gl_panelLibro
 																		.createParallelGroup(Alignment.LEADING)
-																		.addComponent(lblUltimoAñadido,
+																		.addComponent(lblUltimoAdd,
 																				GroupLayout.DEFAULT_SIZE, 199,
 																				Short.MAX_VALUE)
 																		.addComponent(txtPrecio,
@@ -358,7 +358,7 @@ public class UI extends JFrame {
 												.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 												.addComponent(lblPrecio))
-										.addGap(33).addComponent(lblUltimoAñadido).addGap(34)
+										.addGap(33).addComponent(lblUltimoAdd).addGap(34)
 										.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
 												.addComponent(lblCantidad).addComponent(spinner,
 														GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))))
@@ -611,7 +611,7 @@ public class UI extends JFrame {
 												.addGroup(gl_panelLibro.createSequentialGroup().addComponent(lblPrecio)
 														.addGap(18)
 														.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
-																.addComponent(lblUltimoAñadido,
+																.addComponent(lblUltimoAdd,
 																		GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
 																.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, 45,
 																		GroupLayout.PREFERRED_SIZE))))
@@ -677,7 +677,7 @@ public class UI extends JFrame {
 														GroupLayout.PREFERRED_SIZE)
 												.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 32,
 														GroupLayout.PREFERRED_SIZE))))
-								.addGap(47).addComponent(lblUltimoAñadido).addGap(61)
+								.addGap(47).addComponent(lblUltimoAdd).addGap(61)
 								.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING).addComponent(lblFormato)
 										.addComponent(panelFormato, GroupLayout.PREFERRED_SIZE, 75,
 												GroupLayout.PREFERRED_SIZE))

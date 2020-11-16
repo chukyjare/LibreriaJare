@@ -32,7 +32,7 @@ public class ParaUI extends UI {
 	 */
 	private static final long serialVersionUID = 1L;
 	private Control control = new Control();
-	private String librosAñadidos = "Libros registrados: ";
+	private String librosAdd = "Libros registrados: ";
 	private int unidades;
 
 	public ParaUI() {
@@ -131,7 +131,7 @@ public class ParaUI extends UI {
 				try {
 					JOptionPane.showMessageDialog(null, libreria.obtenerLibro(ISBNsel).toString());
 					borrarCampos();
-					lblUltimoAñadido.setVisible(false);
+					lblUltimoAdd.setVisible(false);
 				} catch (Exception ee) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_ILOCALIZABLE.getMensaje());
 				}
@@ -320,7 +320,7 @@ public class ParaUI extends UI {
 	}
 
 	private void actualizarLibrosRegistrados(Libreria libreria) {
-		lblCantidadLibros.setText(librosAñadidos + String.valueOf(libreria.actualizarContador()));
+		lblCantidadLibros.setText(librosAdd + String.valueOf(libreria.actualizarContador()));
 	}
 
 	private JDialog crearConsulta() {
