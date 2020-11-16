@@ -559,7 +559,8 @@ public class UI extends JFrame {
 		itemMovil = new JMenuItem("Versi\u00F3n Movil");
 		itemMovil.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setBounds(100, 100, 659, 953);
+				mnOrdenador.setVisible(false);
+				setBounds(0, 80, 659, 953);
 				lblIcon.setIcon(null);
 				gl_panelSuperior.setHorizontalGroup(gl_panelSuperior.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_panelSuperior.createSequentialGroup().addGap(61)

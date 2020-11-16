@@ -39,6 +39,7 @@ public class ParaUI extends UI {
 
 	public ParaUI() {
 		Libreria libreria = control.getLibreria();
+		control.rellenarTabla(tablaLibros);
 		lblError.setVisible(false);
 		lblCorrect.setVisible(false);
 		comprobarLibreriaVacia(libreria);

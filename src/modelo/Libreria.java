@@ -10,28 +10,57 @@ public class Libreria {
 	private HashMap<String, Libro> mapaLibro;
 	private int contadorLibros = 0;
 	private DefaultTableModel tablaCompleta;
+	private Almacen almacen;
 
 
 	public Libreria() {
 		super();
-		this.mapaLibro = new HashMap<String, Libro>();
+		this.almacen= new Almacen("data.libros");
+		iniciarFichero();
+	}
+
+	private void iniciarFichero() {
+		try {
+			leerAlmacen();
+		} catch (Exception e) {
+		}
+		if (this.mapaLibro==null) {
+			this.mapaLibro=new HashMap<String, Libro>();
+			guardarEnAlmacen();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void leerAlmacen() {
+		this.mapaLibro=(HashMap<String, Libro>) almacen.getAlmacenado();
 	}
 
 	public void anadirLibro(Libro libro) {
-		
+		leerAlmacen();
 		this.mapaLibro.put(libro.getISBN(), libro);
+		guardarEnAlmacen();
 		actualizarContador();
 	}
 
 	
+
+	private void guardarEnAlmacen() {
+		almacen.almacenar(this.mapaLibro);
+		
+	}
 
 	public int actualizarContador() {
 		return contadorLibros= mapaLibro.size();
 	}
 
 	public Libro obtenerLibro(String ISBN) {
-
 		return this.mapaLibro.get(ISBN);
+	}
+	public void borrarLibro(int indice) {
+		leerAlmacen();
+		String ISBN = obtenerISBNconcreto(indice);
+		mapaLibro.remove(ISBN);
+		guardarEnAlmacen();
 	}
 
 	public boolean existeISBN(String ISBN) {
@@ -46,10 +75,6 @@ public class Libreria {
 		return contadorLibros;
 	}
 
-	public void borrarLibro(int indice) {
-		String ISBN = obtenerISBNconcreto(indice);
-		mapaLibro.remove(ISBN);
-	}
 
 	public HashMap<String, Libro> getHashMapLibro() {
 		return this.mapaLibro;
