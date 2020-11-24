@@ -18,6 +18,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -115,6 +116,7 @@ public class UI extends JFrame {
 	protected ArrayList<JTextField> listaTxtValidable = new ArrayList<JTextField>();
 	protected ArrayList<JLabel> listaLblValidable = new ArrayList<JLabel>();
 	protected ArrayList<JButton> listaBotones = new ArrayList<JButton>();
+	protected JLabel lblISBNexistente;
 	
 
 	protected JTable getTablaLibros() {
@@ -125,6 +127,8 @@ public class UI extends JFrame {
 	 * Create the frame.
 	 */
 	public UI() {
+		setTitle("Libreria by Pineapple SL");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(UI.class.getResource("/img/pineappleIcon.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1280, 750);
 		contentPane = new JPanel();
@@ -251,124 +255,140 @@ public class UI extends JFrame {
 
 		lblCorrect = new JLabel("");
 		lblCorrect.setIcon(new ImageIcon(UI.class.getResource("/img/correct.png")));
+		
+		lblISBNexistente = new JLabel("Ya existe este ISBN");
+		lblISBNexistente.setVisible(false);
 
 		GroupLayout gl_panelLibro = new GroupLayout(panelLibro);
-		gl_panelLibro.setHorizontalGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING).addGroup(gl_panelLibro
-				.createSequentialGroup()
-				.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING).addGroup(gl_panelLibro
-						.createSequentialGroup().addGap(26)
-						.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING).addGroup(gl_panelLibro
-								.createSequentialGroup()
-								.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING).addComponent(lblTitulo)
-										.addComponent(lblISBN))
-								.addGap(18)
-								.addGroup(gl_panelLibro.createParallelGroup(Alignment.TRAILING)
-										.addGroup(gl_panelLibro.createSequentialGroup()
-												.addComponent(txtISBN, GroupLayout.PREFERRED_SIZE, 448,
-														GroupLayout.PREFERRED_SIZE)
-												.addGap(18).addComponent(lblError).addGap(18).addComponent(lblCorrect)
-												.addPreferredGap(ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
-												.addComponent(lblFormato).addGap(14))
-										.addGroup(gl_panelLibro.createSequentialGroup()
-												.addComponent(txtTitulo, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
-												.addGap(308))))
-								.addGroup(gl_panelLibro.createSequentialGroup().addGroup(gl_panelLibro
-										.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panelLibro.createSequentialGroup().addComponent(lblEditorial)
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addComponent(txtEditorial, GroupLayout.DEFAULT_SIZE, 523,
-														Short.MAX_VALUE)
-												.addGap(19))
-										.addGroup(
-												gl_panelLibro.createSequentialGroup().addComponent(lblAutor).addGap(18)
-														.addComponent(txtAutor, GroupLayout.DEFAULT_SIZE, 529,
-																Short.MAX_VALUE)
-														.addGap(18))
-										.addGroup(gl_panelLibro.createSequentialGroup()
-												.addPreferredGap(ComponentPlacement.RELATED)
-												.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
-														.addGroup(gl_panelLibro.createSequentialGroup()
-																.addComponent(lblCantidad).addGap(18)
-																.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 48,
-																		GroupLayout.PREFERRED_SIZE))
-														.addGroup(gl_panelLibro.createSequentialGroup()
-																.addComponent(lblPrecio).addGap(18)
-																.addGroup(gl_panelLibro
-																		.createParallelGroup(Alignment.LEADING)
-																		.addComponent(lblUltimoAdd,
-																				GroupLayout.DEFAULT_SIZE, 199,
-																				Short.MAX_VALUE)
-																		.addComponent(txtPrecio,
-																				GroupLayout.PREFERRED_SIZE, 45,
-																				GroupLayout.PREFERRED_SIZE))
-																.addGap(345))
-														.addGroup(gl_panelLibro.createSequentialGroup()
-																.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 94,
-																		GroupLayout.PREFERRED_SIZE)
-																.addPreferredGap(ComponentPlacement.RELATED)
-																.addComponent(panelEstado, GroupLayout.PREFERRED_SIZE,
-																		GroupLayout.DEFAULT_SIZE,
-																		GroupLayout.PREFERRED_SIZE)))))
-										.addGap(291))))
-						.addGroup(gl_panelLibro.createSequentialGroup().addGap(359).addComponent(lblFondo)))
-				.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panelLibro.createSequentialGroup().addGap(18).addComponent(panelFormato,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panelLibro.createSequentialGroup().addGap(5).addComponent(lblIcon)))
-				.addGap(5)));
-		gl_panelLibro.setVerticalGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING).addGroup(gl_panelLibro
-				.createSequentialGroup()
-				.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_panelLibro.createSequentialGroup().addGap(18).addComponent(lblFormato)
-								.addComponent(lblFondo))
-						.addGroup(gl_panelLibro.createSequentialGroup().addGroup(gl_panelLibro
-								.createParallelGroup(Alignment.LEADING)
+		gl_panelLibro.setHorizontalGroup(
+			gl_panelLibro.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelLibro.createSequentialGroup()
+					.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelLibro.createSequentialGroup()
+							.addGap(26)
+							.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_panelLibro.createSequentialGroup()
-										.addComponent(panelFormato, GroupLayout.PREFERRED_SIZE, 75,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(56).addComponent(lblIcon))
-								.addGroup(gl_panelLibro.createSequentialGroup().addGap(18).addGroup(gl_panelLibro
-										.createParallelGroup(Alignment.TRAILING)
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblTitulo)
+										.addComponent(lblISBN))
+									.addGap(18)
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.TRAILING)
 										.addGroup(gl_panelLibro.createSequentialGroup()
-												.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
-														.addComponent(lblISBN).addComponent(txtISBN,
-																GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-																GroupLayout.PREFERRED_SIZE))
-												.addGap(24))
+											.addComponent(txtISBN, GroupLayout.PREFERRED_SIZE, 448, GroupLayout.PREFERRED_SIZE)
+											.addGap(18)
+											.addComponent(lblError)
+											.addGap(18)
+											.addComponent(lblCorrect)
+											.addGap(18)
+											.addComponent(lblISBNexistente)
+											.addPreferredGap(ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+											.addComponent(lblFormato)
+											.addGap(14))
 										.addGroup(gl_panelLibro.createSequentialGroup()
-												.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
-														.addComponent(lblError).addComponent(lblCorrect))
-												.addGap(26)))
-										.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblTitulo)
-												.addComponent(txtTitulo, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblAutor)
-												.addComponent(txtAutor, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblEditorial)
-												.addComponent(txtEditorial, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-										.addGap(18)
-										.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
-												.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE,
-														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(lblPrecio))
-										.addGap(33).addComponent(lblUltimoAdd).addGap(34)
-										.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
-												.addComponent(lblCantidad).addComponent(spinner,
-														GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))))
-								.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_panelLibro.createSequentialGroup().addGap(29).addComponent(
-												lblEstado, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
-										.addGroup(gl_panelLibro.createSequentialGroup().addGap(18).addComponent(
-												panelEstado, GroupLayout.PREFERRED_SIZE, 63,
-												GroupLayout.PREFERRED_SIZE)))))
-				.addContainerGap(15, Short.MAX_VALUE)));
+											.addComponent(txtTitulo, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+											.addGap(308))))
+								.addGroup(gl_panelLibro.createSequentialGroup()
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+										.addGroup(gl_panelLibro.createSequentialGroup()
+											.addComponent(lblEditorial)
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addComponent(txtEditorial, GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+											.addGap(19))
+										.addGroup(gl_panelLibro.createSequentialGroup()
+											.addComponent(lblAutor)
+											.addGap(18)
+											.addComponent(txtAutor, GroupLayout.DEFAULT_SIZE, 529, Short.MAX_VALUE)
+											.addGap(18))
+										.addGroup(gl_panelLibro.createSequentialGroup()
+											.addPreferredGap(ComponentPlacement.RELATED)
+											.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+												.addGroup(gl_panelLibro.createSequentialGroup()
+													.addComponent(lblCantidad)
+													.addGap(18)
+													.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE))
+												.addGroup(gl_panelLibro.createSequentialGroup()
+													.addComponent(lblPrecio)
+													.addGap(18)
+													.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+														.addComponent(lblUltimoAdd, GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+														.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))
+													.addGap(345))
+												.addGroup(gl_panelLibro.createSequentialGroup()
+													.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+													.addPreferredGap(ComponentPlacement.RELATED)
+													.addComponent(panelEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
+									.addGap(291))))
+						.addGroup(gl_panelLibro.createSequentialGroup()
+							.addGap(359)
+							.addComponent(lblFondo)))
+					.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panelLibro.createSequentialGroup()
+							.addGap(18)
+							.addComponent(panelFormato, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_panelLibro.createSequentialGroup()
+							.addGap(5)
+							.addComponent(lblIcon)))
+					.addGap(5))
+		);
+		gl_panelLibro.setVerticalGroup(
+			gl_panelLibro.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panelLibro.createSequentialGroup()
+					.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING, false)
+						.addGroup(gl_panelLibro.createSequentialGroup()
+							.addGap(18)
+							.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
+								.addComponent(lblFormato)
+								.addComponent(lblISBNexistente))
+							.addComponent(lblFondo))
+						.addGroup(gl_panelLibro.createSequentialGroup()
+							.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelLibro.createSequentialGroup()
+									.addComponent(panelFormato, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+									.addGap(56)
+									.addComponent(lblIcon))
+								.addGroup(gl_panelLibro.createSequentialGroup()
+									.addGap(18)
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.TRAILING)
+										.addGroup(gl_panelLibro.createSequentialGroup()
+											.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
+												.addComponent(lblISBN)
+												.addComponent(txtISBN, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+											.addGap(24))
+										.addGroup(gl_panelLibro.createSequentialGroup()
+											.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+												.addComponent(lblError)
+												.addComponent(lblCorrect))
+											.addGap(26)))
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblTitulo)
+										.addComponent(txtTitulo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addGap(18)
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblAutor)
+										.addComponent(txtAutor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addGap(18)
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblEditorial)
+										.addComponent(txtEditorial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+									.addGap(18)
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
+										.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(lblPrecio))
+									.addGap(33)
+									.addComponent(lblUltimoAdd)
+									.addGap(34)
+									.addGroup(gl_panelLibro.createParallelGroup(Alignment.BASELINE)
+										.addComponent(lblCantidad)
+										.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))))
+							.addGroup(gl_panelLibro.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panelLibro.createSequentialGroup()
+									.addGap(29)
+									.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panelLibro.createSequentialGroup()
+									.addGap(18)
+									.addComponent(panelEstado, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))))
+					.addContainerGap(15, Short.MAX_VALUE))
+		);
 		panelEstado.setLayout(new BoxLayout(panelEstado, BoxLayout.X_AXIS));
 
 		rbtnReedicion = new JRadioButton("Reedici\u00F3n");
@@ -432,7 +452,7 @@ public class UI extends JFrame {
 
 		btnCompraUnidad = new JButton("");
 		btnCompraUnidad.setBackground(new Color(50, 205, 50));
-		btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/añadir.png")));
+		btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/add.png")));
 
 		panelBotoneraTabla.setLayout(new GridLayout(0, 1, 0, 0));
 		panelBotoneraTabla.add(btnOjoConsulta);
@@ -791,5 +811,4 @@ public class UI extends JFrame {
 		lblLibreria.setFont(fuente);
 		lblLibreria.setForeground(forenground);
 	}
-
 }

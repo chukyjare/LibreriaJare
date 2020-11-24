@@ -1,103 +1,84 @@
 package modelo;
 
+import java.util.ArrayList;
 
-import java.util.HashMap;
-import java.util.Set;
-
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class Libreria {
-	private HashMap<String, Libro> mapaLibro;
-	private int contadorLibros = 0;
-	private DefaultTableModel tablaCompleta;
-	private Almacen almacen;
+public abstract class Libreria implements Almacenable {
+	protected ArrayList<Libro> arrayLibro;
+	protected int contadorLibros = 0;
+	protected DefaultTableModel tablaCompleta;
+	protected Almacen almacen;
 
 
-	public Libreria() {
-		super();
-		this.almacen= new Almacen("data.libros");
-		iniciarFichero();
-	}
 
-	private void iniciarFichero() {
+	public void iniciar() {
 		try {
-			leerAlmacen();
+			leer();
 		} catch (Exception e) {
 		}
-		if (this.mapaLibro==null) {
-			this.mapaLibro=new HashMap<String, Libro>();
-			guardarEnAlmacen();
+		if (this.arrayLibro == null) {
+			this.arrayLibro = new ArrayList<Libro>();
+
 		}
-	}
-
-	@SuppressWarnings("unchecked")
-	private void leerAlmacen() {
-		this.mapaLibro=(HashMap<String, Libro>) almacen.getAlmacenado();
-	}
-
-	public void anadirLibro(Libro libro) {
-		leerAlmacen();
-		this.mapaLibro.put(libro.getISBN(), libro);
-		guardarEnAlmacen();
-		actualizarContador();
-	}
-
-	
-
-	public void guardarEnAlmacen() {
-		almacen.almacenar(this.mapaLibro);
 		
+
+	}
+	
+	public void anadirLibro(Libro libro) {}
+	
+public void rellenarTabla(JTable tablaLibros) {}
+	
+	public Libro obtenerLibro(String ISBN) {
+
+		for (int i = 0; i < this.arrayLibro.size(); i++) {
+			if (this.arrayLibro.get(i).getISBN().equals(ISBN)) {
+				return arrayLibro.get(i);
+			}
+		}
+		return null;
+	}
+	
+	public boolean existeISBN(String ISBN) {
+
+		for (int i = 0; i < this.arrayLibro.size(); i++) {
+			if (this.arrayLibro.get(i).getISBN().equals(ISBN)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public DefaultTableModel getTablaCompleta() {
+		return tablaCompleta;
 	}
 
 	public int actualizarContador() {
-		return contadorLibros= mapaLibro.size();
-	}
-
-	public Libro obtenerLibro(String ISBN) {
-		return this.mapaLibro.get(ISBN);
-	}
-	public void borrarLibro(int indice) {
-		leerAlmacen();
-		String ISBN = obtenerISBNconcreto(indice);
-		mapaLibro.remove(ISBN);
-		guardarEnAlmacen();
-	}
-
-	public boolean existeISBN(String ISBN) {
-		return this.mapaLibro.containsKey(ISBN);
-	}
-
-	public DefaultTableModel getTablaCompleta() {
-		return tablaCompleta;
+		return contadorLibros = arrayLibro.size();
 	}
 
 	public int getContadorLibros() {
 		return contadorLibros;
 	}
 
+	public void borrarLibro(int indice) {
+		arrayLibro.remove(indice);
+	}
 
-	public HashMap<String, Libro> getHashMapLibro() {
-		return this.mapaLibro;
+	public ArrayList<Libro> getArrayLibro() {
+		return arrayLibro;
 	}
 
 	public boolean isVacia() {
-		if (mapaLibro.isEmpty()) {
+		if (arrayLibro.isEmpty()) {
 			return true;
 		}
 		return false;
 	}
 
 	public Libro getLibro(int i) {
-		String ISBN = obtenerISBNconcreto(i);
-		return obtenerLibro(ISBN);
+		return arrayLibro.get(i);
 	}
-
-	private String obtenerISBNconcreto(int i) {
-		Set <String> conjunto = this.mapaLibro.keySet();
-		Object[] array = conjunto.toArray();
-		String ISBN = (String) array[i];
-		return ISBN;
-	}
-	
 
 }

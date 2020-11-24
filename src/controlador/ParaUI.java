@@ -37,16 +37,17 @@ public class ParaUI extends UI {
 
 	public ParaUI() {
 		Libreria libreria = control.getLibreria();
-		control.rellenarTabla(tablaLibros);
+		libreria.rellenarTabla(tablaLibros);
 		lblError.setVisible(false);
 		lblCorrect.setVisible(false);
 		comprobarLibreriaVacia(libreria);
-
+		
 		txtISBN.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
 				int MAX_CARACTER = 12;
 				txtISBN.setBorder(new LineBorder(SystemColor.controlDkShadow));
+				lblISBNexistente.setVisible(false);
 				if (txtISBN.getText().length() == MAX_CARACTER) {
 					lblCorrect.setVisible(true);
 					lblError.setVisible(false);
@@ -54,6 +55,23 @@ public class ParaUI extends UI {
 					lblCorrect.setVisible(false);
 					lblError.setVisible(true);
 				}
+			}
+		});
+		txtTitulo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if (libreria.existeISBN(txtISBN.getText())) {
+					txtISBN.setBorder(new LineBorder(new Color(255, 0, 0), 3));
+					lblISBNexistente.setVisible(true);
+					lblCorrect.setVisible(false);
+					lblError.setVisible(true);
+				}else {
+					txtISBN.setBorder(new LineBorder(Color.GREEN, 3));
+					lblISBNexistente.setVisible(false);
+					lblCorrect.setVisible(true);
+					lblError.setVisible(false);
+				}
+				txtTitulo.setBorder(new LineBorder(SystemColor.controlDkShadow));
 			}
 		});
 		txtAutor.addKeyListener(new KeyAdapter() {
@@ -66,12 +84,6 @@ public class ParaUI extends UI {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				txtEditorial.setBorder(new LineBorder(SystemColor.controlDkShadow));
-			}
-		});
-		txtTitulo.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				txtTitulo.setBorder(new LineBorder(SystemColor.controlDkShadow));
 			}
 		});
 		txtPrecio.addKeyListener(new KeyAdapter() {
@@ -99,9 +111,8 @@ public class ParaUI extends UI {
 								getRadioButtonEstado(), String.valueOf(spinner.getValue())));
 						actualizarLibrosRegistrados(libreria);
 						borrarCampos();
-						control.rellenarTabla(tablaLibros);
+						libreria.rellenarTabla(tablaLibros);
 						comprobarLibreriaVacia(libreria);
-
 						ponerBordesPorDefecto(listaTxtValidable);
 
 					} else {
@@ -117,8 +128,8 @@ public class ParaUI extends UI {
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Libreria libreria = control.getLibreria();
-				libreria.borrarLibro(tablaLibros.getSelectedRow());
-				control.rellenarTabla(tablaLibros);
+				libreria.borrar(tablaLibros.getSelectedRow());
+				libreria.rellenarTabla(tablaLibros);
 				JOptionPane.showMessageDialog(null, Info.INFO_BORRADO.getMensaje());
 				comprobarLibreriaVacia(libreria);
 				actualizarLibrosRegistrados(libreria);
@@ -157,8 +168,8 @@ public class ParaUI extends UI {
 					if (unidades <= 0) {
 						borrarLibroSeleccionado(libreria);
 					}
-					control.rellenarTabla(tablaLibros);
-					libreria.guardarEnAlmacen();
+					libreria.rellenarTabla(tablaLibros);
+					libreria.guardar();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_NOSELECCIONADO.getMensaje());
 				}
@@ -176,8 +187,8 @@ public class ParaUI extends UI {
 					if (unidades == 0) {
 						borrarLibroSeleccionado(libreria);
 					}
-					control.rellenarTabla(tablaLibros);
-					libreria.guardarEnAlmacen();
+					libreria.rellenarTabla(tablaLibros);
+					libreria.guardar();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_NOSELECCIONADO.getMensaje());
 				}
@@ -191,8 +202,8 @@ public class ParaUI extends UI {
 					unidades = Integer.parseInt(libreria.getLibro(tablaLibros.getSelectedRow()).getCantidad());
 					unidades++;
 					libreria.getLibro(tablaLibros.getSelectedRow()).setCantidad(String.valueOf(unidades));
-					control.rellenarTabla(tablaLibros);
-					libreria.guardarEnAlmacen();
+					libreria.rellenarTabla(tablaLibros);
+					libreria.guardar();
 				} catch (Exception e) {
 					JOptionPane.showMessageDialog(null, Error.ERROR_NOSELECCIONADO.getMensaje());
 				}
@@ -218,7 +229,7 @@ public class ParaUI extends UI {
 				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/book.png")));
 				btnOjoConsulta.setIcon(new ImageIcon(UI.class.getResource("/img/ojoAzul.png")));
 				btnBorraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/restar.png")));
-				btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/añadir.png")));
+				btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/add.png")));
 				btnEditar.setIcon(new ImageIcon(UI.class.getResource("/img/editarColorido.png")));
 			}
 		});
@@ -242,7 +253,7 @@ public class ParaUI extends UI {
 				lblFondo.setIcon(new ImageIcon(UI.class.getResource("/img/simpsonsSchool.png")));
 				btnOjoConsulta.setIcon(new ImageIcon(UI.class.getResource("/img/ojoAzul.png")));
 				btnBorraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/restarSimpsons.png")));
-				btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/añadirSimpsons.png")));
+				btnCompraUnidad.setIcon(new ImageIcon(UI.class.getResource("/img/addSimpsons.png")));
 				btnEditar.setIcon(new ImageIcon(UI.class.getResource("/img/editarSimpsons.png")));
 			}
 		});
@@ -314,7 +325,7 @@ public class ParaUI extends UI {
 	}
 
 	private void borrarLibroSeleccionado(Libreria libreria) {
-		libreria.borrarLibro(tablaLibros.getSelectedRow());
+		libreria.borrar(tablaLibros.getSelectedRow());
 		actualizarLibrosRegistrados(libreria);
 		JOptionPane.showMessageDialog(null, Info.INFO_BORRADO.getMensaje());
 	}
