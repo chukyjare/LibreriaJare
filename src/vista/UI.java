@@ -37,6 +37,9 @@ import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.BevelBorder;
 import javax.swing.JSpinner;
 import javax.swing.border.LineBorder;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import modelo.Tematica;
 
 public class UI extends JFrame {
 
@@ -101,6 +104,7 @@ public class UI extends JFrame {
 	private JLabel lblCantidad;
 	private JLabel lblFormato;
 	private JLabel lblEstado;
+	private JLabel lblTematica;
 	protected JMenuItem itemVacio;
 	private JMenuItem itemMovil;
 	protected JMenuItem itemButtonLight;
@@ -117,6 +121,8 @@ public class UI extends JFrame {
 	protected ArrayList<JLabel> listaLblValidable = new ArrayList<JLabel>();
 	protected ArrayList<JButton> listaBotones = new ArrayList<JButton>();
 	protected JLabel lblISBNexistente;
+	protected JComboBox<Tematica> comBoxTematica;
+	private JPanel panelTematica;
 	
 
 	protected JTable getTablaLibros() {
@@ -258,6 +264,9 @@ public class UI extends JFrame {
 		
 		lblISBNexistente = new JLabel("Ya existe este ISBN");
 		lblISBNexistente.setVisible(false);
+		
+		panelTematica = new JPanel();
+		
 
 		GroupLayout gl_panelLibro = new GroupLayout(panelLibro);
 		gl_panelLibro.setHorizontalGroup(
@@ -281,7 +290,7 @@ public class UI extends JFrame {
 											.addComponent(lblCorrect)
 											.addGap(18)
 											.addComponent(lblISBNexistente)
-											.addPreferredGap(ComponentPlacement.RELATED, 144, Short.MAX_VALUE)
+											.addPreferredGap(ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
 											.addComponent(lblFormato)
 											.addGap(14))
 										.addGroup(gl_panelLibro.createSequentialGroup()
@@ -316,7 +325,10 @@ public class UI extends JFrame {
 												.addGroup(gl_panelLibro.createSequentialGroup()
 													.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
 													.addPreferredGap(ComponentPlacement.RELATED)
-													.addComponent(panelEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
+													.addComponent(panelEstado, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+													.addGap(59)
+													.addComponent(panelTematica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+													.addGap(143)))))
 									.addGap(291))))
 						.addGroup(gl_panelLibro.createSequentialGroup()
 							.addGap(359)
@@ -386,9 +398,22 @@ public class UI extends JFrame {
 									.addComponent(lblEstado, GroupLayout.PREFERRED_SIZE, 29, GroupLayout.PREFERRED_SIZE))
 								.addGroup(gl_panelLibro.createSequentialGroup()
 									.addGap(18)
-									.addComponent(panelEstado, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE)))))
+									.addComponent(panelEstado, GroupLayout.PREFERRED_SIZE, 63, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panelLibro.createSequentialGroup()
+									.addGap(31)
+									.addComponent(panelTematica, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))))
 					.addContainerGap(15, Short.MAX_VALUE))
 		);
+		
+		lblTematica = new JLabel("Tem\u00E1tica");
+		lblTematica.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTematica.add(lblTematica);
+		
+		comBoxTematica = new JComboBox<Tematica>();
+		comBoxTematica.setModel(new DefaultComboBoxModel<Tematica>(Tematica.values()));
+		comBoxTematica.setSelectedItem(null);
+		
+		panelTematica.add(comBoxTematica);
 		panelEstado.setLayout(new BoxLayout(panelEstado, BoxLayout.X_AXIS));
 
 		rbtnReedicion = new JRadioButton("Reedici\u00F3n");
@@ -804,6 +829,7 @@ public class UI extends JFrame {
 		panelInferior.setBackground(secondary);
 		panelEstanteria.setBackground(primary);
 		panelEstado.setBackground(primary);
+		panelTematica.setBackground(secondary);
 		panelFormato.setBackground(primary);
 	}
 

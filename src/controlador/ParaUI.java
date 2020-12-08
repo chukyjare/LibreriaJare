@@ -107,7 +107,7 @@ public class ParaUI extends UI {
 					if (!libreria.existeISBN(txtISBN.getText())) {
 
 						libreria.anadirLibro(new Libro(txtISBN.getText(), txtTitulo.getText(), txtAutor.getText(),
-								txtEditorial.getText(), txtPrecio.getText() + "€", getRadioButtonFormato(),
+								txtEditorial.getText(), txtPrecio.getText() + "€", getRadioButtonFormato(), String.valueOf(comBoxTematica.getSelectedItem()),
 								getRadioButtonEstado(), String.valueOf(spinner.getValue())));
 						actualizarLibrosRegistrados(libreria);
 						borrarCampos();

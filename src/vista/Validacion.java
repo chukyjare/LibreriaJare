@@ -29,7 +29,7 @@ public class Validacion {
 		if (nombre.equals("Título")) {
 			validarLetrasYNumeros(txt);
 		}
-		if (nombre.equals("Editorial") || nombre.equals("Autor")) {
+		if (nombre.equals("Editorial") || nombre.equals("Autor") || nombre.equals("Temática")) {
 			validarLetras(txt);
 		}
 		if (nombre.equals("Precio")) {

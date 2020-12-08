@@ -38,12 +38,14 @@ public class ConsultaDialog extends JDialog {
 	private JLabel lblCantidad;
 	private ArrayList<JTextField> listaTexfields = new ArrayList<JTextField>();
 	private ArrayList<JLabel> listaLabels = new ArrayList<JLabel>();
+	private JTextField txtTematica;
+	private JLabel lblTematica;
 
 	public ConsultaDialog(JFrame padre, boolean modo, Libro libro) {
 		super(padre, modo);
 		setTitle("Editar");
 
-		setBounds(600, 300, 348, 378);
+		setBounds(600, 300, 352, 449);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setBackground(Color.DARK_GRAY);
@@ -68,7 +70,11 @@ public class ConsultaDialog extends JDialog {
 		lblCantidad = new JLabel("Cantidad");
 		lblCantidad.setForeground(Color.YELLOW);
 		lblCantidad.setFont(new Font("Tahoma", Font.BOLD, 13));
-
+		
+		lblTematica = new JLabel("Tem\u00E1tica");
+		lblTematica.setForeground(Color.YELLOW);
+		lblTematica.setFont(new Font("Tahoma", Font.BOLD, 13));
+		
 		txtTitulo = new JTextField();
 		txtTitulo.setForeground(Color.BLACK);
 		txtTitulo.setBackground(new Color(204, 204, 255));
@@ -98,6 +104,12 @@ public class ConsultaDialog extends JDialog {
 		txtCantidad.setBackground(new Color(204, 204, 255));
 		txtCantidad.setText(libro.getCantidad());
 		txtCantidad.setColumns(10);
+		
+		txtTematica = new JTextField();
+		txtTematica.setForeground(Color.BLACK);
+		txtTematica.setBackground(new Color(204, 204, 255));
+		txtTematica.setText(libro.getTematica());
+		txtTematica.setColumns(10);
 
 		crearListaLabels();
 		crearListaTexfields();
@@ -127,45 +139,79 @@ public class ConsultaDialog extends JDialog {
 		});
 		btnLimpiar.setForeground(Color.WHITE);
 		btnLimpiar.setBackground(Color.BLACK);
+		
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(21)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_contentPane.createSequentialGroup().addComponent(lblCantidad).addGap(18)
-										.addComponent(txtCantidad, GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE))
-								.addGroup(gl_contentPane.createSequentialGroup().addComponent(lblPrecio).addGap(18)
-										.addComponent(txtPrecio, GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
-								.addGroup(gl_contentPane.createSequentialGroup().addComponent(lblAutor).addGap(18)
-										.addComponent(txtAutor, GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))
-								.addGroup(gl_contentPane.createSequentialGroup().addComponent(lblTitulo).addGap(18)
-										.addComponent(txtTitulo, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
-								.addGroup(gl_contentPane.createSequentialGroup().addComponent(lblEditorial).addGap(18)
-										.addComponent(txtEditorial, GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)))
-						.addGap(38))
-				.addGroup(gl_contentPane.createSequentialGroup().addGap(81)
-						.addComponent(btnOK, GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-						.addPreferredGap(ComponentPlacement.UNRELATED)
-						.addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, 49, Short.MAX_VALUE).addGap(48)));
-		gl_contentPane.setVerticalGroup(gl_contentPane.createParallelGroup(Alignment.LEADING).addGroup(gl_contentPane
-				.createSequentialGroup().addGap(32)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblTitulo).addComponent(
-						txtTitulo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(32)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblAutor).addComponent(
-						txtAutor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(31)
-				.addGroup(gl_contentPane
-						.createParallelGroup(Alignment.BASELINE).addComponent(lblEditorial).addComponent(txtEditorial,
-								GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(31)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblPrecio).addComponent(
-						txtPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(30)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(lblCantidad).addComponent(
-						txtCantidad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-				.addGap(18).addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE).addComponent(btnOK)
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGap(66)
+					.addComponent(btnOK, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+					.addGap(18)
+					.addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE)
+					.addGap(57))
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGap(21)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblTematica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addGap(18)
+							.addComponent(txtTematica, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblCantidad)
+							.addGap(18)
+							.addComponent(txtCantidad, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblPrecio)
+							.addGap(18)
+							.addComponent(txtPrecio, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblAutor)
+							.addGap(18)
+							.addComponent(txtAutor, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblTitulo)
+							.addGap(18)
+							.addComponent(txtTitulo, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(lblEditorial)
+							.addGap(18)
+							.addComponent(txtEditorial, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
+					.addGap(38))
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(32)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTitulo)
+						.addComponent(txtTitulo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(32)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblAutor)
+						.addComponent(txtAutor, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(31)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblEditorial)
+						.addComponent(txtEditorial, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(31)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPrecio)
+						.addComponent(txtPrecio, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(30)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCantidad)
+						.addComponent(txtCantidad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTematica)
+						.addComponent(txtTematica, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(31)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnOK)
 						.addComponent(btnLimpiar))
-				.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+					.addGap(24))
+		);
 		contentPane.setLayout(gl_contentPane);
 	}
 
@@ -175,6 +221,7 @@ public class ConsultaDialog extends JDialog {
 		listaLabels.add(lblEditorial);
 		listaLabels.add(lblPrecio);
 		listaLabels.add(lblCantidad);
+		listaLabels.add(lblTematica);
 	}
 
 	private void crearListaTexfields() {
@@ -184,6 +231,7 @@ public class ConsultaDialog extends JDialog {
 		listaTexfields.add(txtEditorial);
 		listaTexfields.add(txtPrecio);
 		listaTexfields.add(txtCantidad);
+		listaTexfields.add(txtTematica);
 
 	}
 
@@ -200,7 +248,7 @@ public class ConsultaDialog extends JDialog {
 		libro.setEditorial(txtEditorial.getText());
 		libro.setPrecio(txtPrecio.getText() + "€");
 		libro.setCantidad(txtCantidad.getText());
+		libro.setTematica(txtTematica.getText());
 
 	}
-
 }

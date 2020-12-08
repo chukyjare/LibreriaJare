@@ -6,12 +6,14 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class LibreriaPorMapa extends Libreria {
+	
+	protected AlmacenFicheros almacen;
 	private HashMap<String, Libro> mapaLibro;
-	private final byte NUM_FILAS = 8;
+	private final byte NUM_FILAS = 9;
 
 	public LibreriaPorMapa() {
 		super();
-		this.almacen = new Almacen("data.librosMapa");
+		this.almacen = new AlmacenFicheros("data.librosMapa");
 		iniciar();
 	}
 	@Override
@@ -27,7 +29,7 @@ public class LibreriaPorMapa extends Libreria {
 	}
 	@Override
 	public void rellenarTabla(JTable tablaLibros) {
-		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO",
+		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO", "TEMÁTICA",
 				"CANTIDAD" };
 		String[][] filasTabla = new String[mapaLibro.size()][NUM_FILAS];
 		for (int i = 0; i < mapaLibro.size(); i++) {
@@ -38,7 +40,8 @@ public class LibreriaPorMapa extends Libreria {
 			filasTabla[i][4] = getLibro(i).getPrecio();
 			filasTabla[i][5] = getLibro(i).getFormato();
 			filasTabla[i][6] = getLibro(i).getEstado();
-			filasTabla[i][7] = getLibro(i).getCantidad();
+			filasTabla[i][7] = getLibro(i).getTematica();
+			filasTabla[i][8] = getLibro(i).getCantidad();
 		}
 		tablaCompleta = new DefaultTableModel(filasTabla, nombresColumnas);
 		tablaLibros.setModel(tablaCompleta);

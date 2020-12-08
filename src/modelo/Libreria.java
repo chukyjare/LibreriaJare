@@ -9,7 +9,7 @@ public abstract class Libreria implements Almacenable {
 	protected ArrayList<Libro> arrayLibro;
 	protected int contadorLibros = 0;
 	protected DefaultTableModel tablaCompleta;
-	protected Almacen almacen;
+//	protected Almacen almacen;
 
 
 

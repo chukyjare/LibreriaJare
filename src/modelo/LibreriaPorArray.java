@@ -5,18 +5,19 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class LibreriaPorArray extends Libreria {
-	private final byte NUM_FILAS = 8;
+	protected AlmacenFicheros almacen;
+	private final byte NUM_FILAS = 9;
 
 	public LibreriaPorArray() {
 		super();
-		this.almacen = new Almacen("data.librosArray");
+		this.almacen = new AlmacenFicheros("data.librosArray");
 		iniciar();
 	}
 	
 	@Override
 	public void rellenarTabla(JTable tablaLibros) {
 		
-		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO",
+		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO", "TEMÁTICA",
 		"CANTIDAD" };
 		String[][] filasTabla = new String[arrayLibro.size()][NUM_FILAS];
 		for (int i = 0; i < arrayLibro.size(); i++) {
@@ -27,7 +28,8 @@ public class LibreriaPorArray extends Libreria {
 			filasTabla[i][4] = arrayLibro.get(i).getPrecio();
 			filasTabla[i][5] = arrayLibro.get(i).getFormato();
 			filasTabla[i][6] = arrayLibro.get(i).getEstado();
-			filasTabla[i][7] = arrayLibro.get(i).getCantidad();
+			filasTabla[i][7] = arrayLibro.get(i).getTematica();
+			filasTabla[i][8] = arrayLibro.get(i).getCantidad();
 		}
 		tablaCompleta = new DefaultTableModel(filasTabla, nombresColumnas);
 		tablaLibros.setModel(tablaCompleta);

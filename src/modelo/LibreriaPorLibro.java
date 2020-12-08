@@ -7,11 +7,12 @@ import javax.swing.table.DefaultTableModel;
 
 public class LibreriaPorLibro extends Libreria {
 	
-	private final byte NUM_FILAS = 8;
+	private AlmacenFicheros almacen;
+	private final byte NUM_FILAS = 9;
 	
 	public LibreriaPorLibro() {
 		super();
-		this.almacen = new Almacen("data.libros");
+		this.almacen = new AlmacenFicheros("data.libros");
 		iniciar();
 	}
 	
@@ -23,9 +24,10 @@ public class LibreriaPorLibro extends Libreria {
 	@Override
 	public void rellenarTabla(JTable tablaLibros) {
 		
-		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO",
+		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO", "TEMÁTICA",
 		"CANTIDAD" };
 		String[][] filasTabla = new String[arrayLibro.size()][NUM_FILAS];
+		System.out.println(arrayLibro.size());
 		for (int i = 0; i < arrayLibro.size(); i++) {
 			filasTabla[i][0] = arrayLibro.get(i).getISBN();
 			filasTabla[i][1] = arrayLibro.get(i).getTitulo();
@@ -34,7 +36,8 @@ public class LibreriaPorLibro extends Libreria {
 			filasTabla[i][4] = arrayLibro.get(i).getPrecio();
 			filasTabla[i][5] = arrayLibro.get(i).getFormato();
 			filasTabla[i][6] = arrayLibro.get(i).getEstado();
-			filasTabla[i][7] = arrayLibro.get(i).getCantidad();
+			filasTabla[i][7] = arrayLibro.get(i).getTematica();
+			filasTabla[i][8] = arrayLibro.get(i).getCantidad();
 		}
 		tablaCompleta = new DefaultTableModel(filasTabla, nombresColumnas);
 		tablaLibros.setModel(tablaCompleta);
