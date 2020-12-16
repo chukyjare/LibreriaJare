@@ -6,8 +6,8 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class LibreriaPorMapa extends Libreria {
-	
-	protected AlmacenFicheros almacen;
+
+	protected Almacen almacen;
 	private HashMap<String, Libro> mapaLibro;
 	private final byte NUM_FILAS = 9;
 
@@ -16,6 +16,7 @@ public class LibreriaPorMapa extends Libreria {
 		this.almacen = new AlmacenFicheros("data.librosMapa");
 		iniciar();
 	}
+
 	@Override
 	public void iniciar() {
 		try {
@@ -27,6 +28,7 @@ public class LibreriaPorMapa extends Libreria {
 			guardar();
 		}
 	}
+
 	@Override
 	public void rellenarTabla(JTable tablaLibros) {
 		String[] nombresColumnas = { "ISBN", "TÍTULO", "EDITORIAL", "AUTOR", "PRECIO", "FORMATO", "ESTADO", "TEMÁTICA",
@@ -46,8 +48,9 @@ public class LibreriaPorMapa extends Libreria {
 		tablaCompleta = new DefaultTableModel(filasTabla, nombresColumnas);
 		tablaLibros.setModel(tablaCompleta);
 	}
-
-	private String obtenerISBNconcreto(int i) {
+	
+	@Override
+	protected String obtenerISBNconcreto(int i) {
 		Set<String> conjunto = this.mapaLibro.keySet();
 		Object[] array = conjunto.toArray();
 		String ISBN = (String) array[i];
@@ -58,16 +61,16 @@ public class LibreriaPorMapa extends Libreria {
 	public Libro obtenerLibro(String ISBN) {
 		return this.mapaLibro.get(ISBN);
 	}
-	
+
 	@Override
 	public boolean existeISBN(String ISBN) {
 		return this.mapaLibro.containsKey(ISBN);
 	}
-	
+
 	public HashMap<String, Libro> getHashMapLibro() {
 		return this.mapaLibro;
 	}
-	
+
 	@Override
 	public boolean isVacia() {
 		if (mapaLibro.isEmpty()) {
@@ -75,12 +78,13 @@ public class LibreriaPorMapa extends Libreria {
 		}
 		return false;
 	}
-	
+
 	@Override
 	public Libro getLibro(int i) {
 		String ISBN = obtenerISBNconcreto(i);
 		return obtenerLibro(ISBN);
 	}
+
 	@Override
 	public void anadirLibro(Libro libro) {
 		leer();
@@ -88,7 +92,7 @@ public class LibreriaPorMapa extends Libreria {
 		guardar();
 		actualizarContador();
 	}
-	
+
 	@Override
 	public void guardar() {
 		almacen.almacenarMapa(this.mapaLibro);
@@ -109,8 +113,6 @@ public class LibreriaPorMapa extends Libreria {
 		guardar();
 
 	}
-
-
 
 	@Override
 	public int actualizarContador() {

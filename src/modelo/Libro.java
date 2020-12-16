@@ -22,7 +22,7 @@ public class Libro implements Serializable{
 	private String cantidad;
 
 	public Libro(String iSBN, String titulo, String autor, String editorial, String precio, String formato,
-			String tematica, String estado, String cantidad) {
+			String estado, String tematica, String cantidad) {
 		super();
 		ISBN = iSBN;
 		this.titulo = titulo;
@@ -30,8 +30,8 @@ public class Libro implements Serializable{
 		this.editorial = editorial;
 		this.precio = precio;
 		this.formato = formato;
-		this.tematica = tematica;
 		this.estado = estado;
+		this.tematica = tematica;
 		this.cantidad = cantidad;
 	}
 

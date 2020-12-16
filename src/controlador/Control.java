@@ -8,12 +8,13 @@ import modelo.Libreria;
 import modelo.LibreriaPorArray;
 import modelo.LibreriaPorLibro;
 import modelo.LibreriaPorMapa;
+import modelo.LibreriaSQL;
 
 
 public class Control {
 	private Libreria libreria;
 	private DefaultTableModel tablaCompleta;
-	private String miEstrategia = Estrategia.ESTRATEGIA_PORMAPA.getMensaje();
+	private String miEstrategia = Estrategia.ESTRATEGIA_PORSQL.getMensaje();
 
 	public Control() {
 		super();
@@ -25,6 +26,9 @@ public class Control {
 		}
 		if (miEstrategia.equals(Estrategia.ESTRATEGIA_PORMAPA.getMensaje())) {
 			this.libreria = new LibreriaPorMapa();
+		}
+		if (miEstrategia.equals(Estrategia.ESTRATEGIA_PORSQL.getMensaje())) {
+			this.libreria = new LibreriaSQL();
 		}
 		this.tablaCompleta = libreria.getTablaCompleta();
 	}

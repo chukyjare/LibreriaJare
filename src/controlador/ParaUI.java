@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.border.LineBorder;
 import modelo.Error;
+import modelo.Estado;
+import modelo.Formato;
 import modelo.Info;
 import modelo.Libreria;
 import modelo.Libro;
@@ -41,7 +43,7 @@ public class ParaUI extends UI {
 		lblError.setVisible(false);
 		lblCorrect.setVisible(false);
 		comprobarLibreriaVacia(libreria);
-		
+
 		txtISBN.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent arg0) {
@@ -65,7 +67,7 @@ public class ParaUI extends UI {
 					lblISBNexistente.setVisible(true);
 					lblCorrect.setVisible(false);
 					lblError.setVisible(true);
-				}else {
+				} else {
 					txtISBN.setBorder(new LineBorder(Color.GREEN, 3));
 					lblISBNexistente.setVisible(false);
 					lblCorrect.setVisible(true);
@@ -107,8 +109,9 @@ public class ParaUI extends UI {
 					if (!libreria.existeISBN(txtISBN.getText())) {
 
 						libreria.anadirLibro(new Libro(txtISBN.getText(), txtTitulo.getText(), txtAutor.getText(),
-								txtEditorial.getText(), txtPrecio.getText() + "€", getRadioButtonFormato(), String.valueOf(comBoxTematica.getSelectedItem()),
-								getRadioButtonEstado(), String.valueOf(spinner.getValue())));
+								txtEditorial.getText(), txtPrecio.getText() + "€", getRadioButtonFormato(),
+								getRadioButtonEstado(), String.valueOf(comBoxTematica.getSelectedItem()),
+								String.valueOf(spinner.getValue())));
 						actualizarLibrosRegistrados(libreria);
 						borrarCampos();
 						libreria.rellenarTabla(tablaLibros);
@@ -379,26 +382,26 @@ public class ParaUI extends UI {
 
 	private String getRadioButtonFormato() {
 		if (rbtnCartone.isSelected()) {
-			return rbtnCartone.getText();
+			return String.valueOf(Formato.Cartoné);
 		}
 		if (rbtnEspiral.isSelected()) {
-			return rbtnEspiral.getText();
+			return String.valueOf(Formato.Espiral);
 		}
 		if (rbtnGrapada.isSelected()) {
-			return rbtnGrapada.getText();
+			return String.valueOf(Formato.Grapada);
 		}
 		if (rbtnRustica.isSelected()) {
-			return rbtnRustica.getText();
+			return String.valueOf(Formato.Rústica);
 		}
 		return null;
 	}
 
 	private String getRadioButtonEstado() {
 		if (rbtnNovedad.isSelected()) {
-			return rbtnNovedad.getText();
+			return String.valueOf(Estado.Novedad);
 		}
 		if (rbtnReedicion.isSelected()) {
-			return rbtnReedicion.getText();
+			return String.valueOf(Estado.Reedición);
 		}
 
 		return null;

@@ -1,43 +1,55 @@
 package modelo;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 
-import controlador.acceso.AccesoBBDD;
+public class LibreriaSQL extends Libreria {
 
-public class LibreriaSQL extends Libreria{
-	
-	private Connection miConexion=null;
-
-	
+	private Almacen almacen;
 
 	public LibreriaSQL() {
 		super();
-		miConexion = AccesoBBDD.getConnection();
+		almacen = new AlmacenSQL();
+		iniciar();
 	}
-	
+
+	@Override
+	public void anadirLibro(Libro libro) {
+
+		contadorLibros = arrayLibro.size();
+		try {
+			regitrarLibro(libro);
+			guardar();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void regitrarLibro(Libro libro) throws SQLException {
+		almacen.insertarLibro(libro);
+
+	}
+
 	@Override
 	public void guardar() {
-		// TODO Auto-generated method stub
-		
+		if (almacen.comprobarModificado()) {
+			almacen.modificarLibro();
+		}
+		this.arrayLibro = almacen.getArrayList();
+
 	}
 
 	@Override
 	public void leer() {
-		// TODO Auto-generated method stub
+		almacen.almacenarAll();
+		this.arrayLibro = almacen.getArrayList();
 	}
 
 	@Override
 	public void borrar(int i) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public Connection getMiConexion() {
-		return miConexion;
+		almacen.borrarPorISBN(obtenerISBNconcreto(i));
+		borrarLibro(i);
+		almacen.setArrayList(arrayLibro);
 	}
 
 }

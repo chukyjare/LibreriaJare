@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,6 +20,8 @@ import modelo.Error;
 import modelo.Libro;
 import java.awt.Font;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JComboBox;
+import modelo.Tematica;
 
 public class ConsultaDialog extends JDialog {
 
@@ -38,8 +42,8 @@ public class ConsultaDialog extends JDialog {
 	private JLabel lblCantidad;
 	private ArrayList<JTextField> listaTexfields = new ArrayList<JTextField>();
 	private ArrayList<JLabel> listaLabels = new ArrayList<JLabel>();
-	private JTextField txtTematica;
-	private JLabel lblTematica;
+	private JPanel panelTematica;
+	private JComboBox<Tematica> comBoxTematica;
 
 	public ConsultaDialog(JFrame padre, boolean modo, Libro libro) {
 		super(padre, modo);
@@ -71,10 +75,6 @@ public class ConsultaDialog extends JDialog {
 		lblCantidad.setForeground(Color.YELLOW);
 		lblCantidad.setFont(new Font("Tahoma", Font.BOLD, 13));
 		
-		lblTematica = new JLabel("Tem\u00E1tica");
-		lblTematica.setForeground(Color.YELLOW);
-		lblTematica.setFont(new Font("Tahoma", Font.BOLD, 13));
-		
 		txtTitulo = new JTextField();
 		txtTitulo.setForeground(Color.BLACK);
 		txtTitulo.setBackground(new Color(204, 204, 255));
@@ -104,12 +104,6 @@ public class ConsultaDialog extends JDialog {
 		txtCantidad.setBackground(new Color(204, 204, 255));
 		txtCantidad.setText(libro.getCantidad());
 		txtCantidad.setColumns(10);
-		
-		txtTematica = new JTextField();
-		txtTematica.setForeground(Color.BLACK);
-		txtTematica.setBackground(new Color(204, 204, 255));
-		txtTematica.setText(libro.getTematica());
-		txtTematica.setColumns(10);
 
 		crearListaLabels();
 		crearListaTexfields();
@@ -140,44 +134,56 @@ public class ConsultaDialog extends JDialog {
 		btnLimpiar.setForeground(Color.WHITE);
 		btnLimpiar.setBackground(Color.BLACK);
 		
+		panelTematica = new JPanel();
+		
+		JLabel lblTematica_1 = new JLabel("Tem\u00E1tica");
+		lblTematica_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		panelTematica.add(lblTematica_1);
+		
+		comBoxTematica = new JComboBox<Tematica>();
+		comBoxTematica.setModel(new DefaultComboBoxModel<Tematica>(Tematica.values()));
+		comBoxTematica.setSelectedItem(null);
+		panelTematica.add(comBoxTematica);
+		
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(66)
-					.addComponent(btnOK, GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+					.addComponent(btnOK, GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
 					.addGap(18)
-					.addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE)
+					.addComponent(btnLimpiar, GroupLayout.PREFERRED_SIZE, 92, Short.MAX_VALUE)
 					.addGap(57))
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(21)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblTematica, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addGap(18)
-							.addComponent(txtTematica, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+							.addComponent(panelTematica, GroupLayout.PREFERRED_SIZE, 31, Short.MAX_VALUE)
+							.addGap(142))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblCantidad)
-							.addGap(18)
-							.addComponent(txtCantidad, GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblPrecio)
-							.addGap(18)
-							.addComponent(txtPrecio, GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblAutor)
-							.addGap(18)
-							.addComponent(txtAutor, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblTitulo)
-							.addGap(18)
-							.addComponent(txtTitulo, GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblEditorial)
-							.addGap(18)
-							.addComponent(txtEditorial, GroupLayout.DEFAULT_SIZE, 191, Short.MAX_VALUE)))
-					.addGap(38))
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblCantidad)
+									.addGap(18)
+									.addComponent(txtCantidad, GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblPrecio)
+									.addGap(18)
+									.addComponent(txtPrecio, GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblAutor)
+									.addGap(18)
+									.addComponent(txtAutor, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblTitulo)
+									.addGap(18)
+									.addComponent(txtTitulo, GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE))
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(lblEditorial)
+									.addGap(18)
+									.addComponent(txtEditorial, GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)))
+							.addGap(38))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -202,11 +208,9 @@ public class ConsultaDialog extends JDialog {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblCantidad)
 						.addComponent(txtCantidad, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblTematica)
-						.addComponent(txtTematica, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addGap(31)
+					.addComponent(panelTematica, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnOK)
 						.addComponent(btnLimpiar))
@@ -221,7 +225,6 @@ public class ConsultaDialog extends JDialog {
 		listaLabels.add(lblEditorial);
 		listaLabels.add(lblPrecio);
 		listaLabels.add(lblCantidad);
-		listaLabels.add(lblTematica);
 	}
 
 	private void crearListaTexfields() {
@@ -231,7 +234,6 @@ public class ConsultaDialog extends JDialog {
 		listaTexfields.add(txtEditorial);
 		listaTexfields.add(txtPrecio);
 		listaTexfields.add(txtCantidad);
-		listaTexfields.add(txtTematica);
 
 	}
 
@@ -248,7 +250,7 @@ public class ConsultaDialog extends JDialog {
 		libro.setEditorial(txtEditorial.getText());
 		libro.setPrecio(txtPrecio.getText() + "€");
 		libro.setCantidad(txtCantidad.getText());
-		libro.setTematica(txtTematica.getText());
+		libro.setTematica(String.valueOf(comBoxTematica.getSelectedItem()));
 
 	}
 }

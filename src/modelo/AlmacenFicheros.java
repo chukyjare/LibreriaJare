@@ -8,24 +8,23 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class AlmacenFicheros extends Almacen{
+public class AlmacenFicheros extends Almacen {
 
 	private File fichero;
 	private FileOutputStream flujoEscritura;
 	private FileInputStream flujoLectura;
 	private ObjectInputStream adaptadorLectura;
 	private ObjectOutputStream adaptadorEscritura;
-	private ArrayList<Libro> arrayList = new ArrayList<Libro>();
-
 
 	public AlmacenFicheros(String nombre) {
 		super();
+		arrayList = new ArrayList<Libro>();
 		fichero = new File(nombre);
 		comprobarFichero();
 	}
 
 	@Override
-	public boolean almacenar(Object objeto) {
+	protected boolean almacenar(Object objeto) {
 		try {
 			flujoEscritura = new FileOutputStream(fichero);
 			adaptadorEscritura = new ObjectOutputStream(flujoEscritura);
@@ -34,7 +33,7 @@ public class AlmacenFicheros extends Almacen{
 				arrayList.add((Libro) objeto);
 			} catch (Exception e) {
 				System.out.println("{Libro registrado}");
-			}finally {
+			} finally {
 				adaptadorEscritura.close();
 				flujoEscritura.close();
 			}
@@ -43,9 +42,9 @@ public class AlmacenFicheros extends Almacen{
 			return false;
 		}
 	}
-	
+
 	@Override
-	public boolean actualizar() {
+	protected boolean actualizar() {
 		try {
 			flujoEscritura = new FileOutputStream(fichero);
 			adaptadorEscritura = new ObjectOutputStream(flujoEscritura);
@@ -59,9 +58,9 @@ public class AlmacenFicheros extends Almacen{
 			return false;
 		}
 	}
-	
+
 	@Override
-	public Object getAlmacenado() {
+	protected Object getAlmacenado() {
 		Object objeto = null;
 		try {
 			flujoLectura = new FileInputStream(fichero);
@@ -70,7 +69,7 @@ public class AlmacenFicheros extends Almacen{
 				objeto = adaptadorLectura.readObject();
 			} catch (Exception e) {
 				e.printStackTrace();
-			}finally {
+			} finally {
 				adaptadorLectura.close();
 				flujoLectura.close();
 			}
@@ -79,8 +78,9 @@ public class AlmacenFicheros extends Almacen{
 		}
 		return objeto;
 	}
-	
-	public boolean almacenarMapa(Object objeto) {
+
+	@Override
+	protected boolean almacenarMapa(Object objeto) {
 		try {
 			flujoEscritura = new FileOutputStream(fichero);
 			adaptadorEscritura = new ObjectOutputStream(flujoEscritura);
@@ -92,8 +92,9 @@ public class AlmacenFicheros extends Almacen{
 			return false;
 		}
 	}
-	
-	public boolean almacenarLibro(Libro libro) {
+
+	@Override
+	protected boolean almacenarLibro(Libro libro) {
 		try {
 			flujoEscritura = new FileOutputStream(fichero);
 			adaptadorEscritura = new ObjectOutputStream(flujoEscritura);
@@ -108,7 +109,9 @@ public class AlmacenFicheros extends Almacen{
 			return false;
 		}
 	}
-	public void almacenarAll() {
+
+	@Override
+	protected void almacenarAll() {
 		try {
 			flujoLectura = new FileInputStream(fichero);
 			adaptadorLectura = new ObjectInputStream(flujoLectura);
@@ -117,28 +120,19 @@ public class AlmacenFicheros extends Almacen{
 				arrayList.add(libro);
 				libro = (Libro) adaptadorLectura.readObject();
 			}
-			
+
 		} catch (IOException | ClassNotFoundException e) {
-			
+
 		} finally {
 			try {
 				this.flujoLectura.close();
 				this.adaptadorLectura.close();
-				
+
 			} catch (Exception e) {
 			}
 		}
 	}
-	
-	
-	
-	public ArrayList<Libro> getArrayList() {
-		return arrayList;
-	}
 
-	public void setArrayList(ArrayList<Libro> arrayList) {
-		this.arrayList = arrayList;
-	}
 	private void comprobarFichero() {
 		if (!fichero.exists()) {
 			try {
